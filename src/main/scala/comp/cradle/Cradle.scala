@@ -1,10 +1,12 @@
 
 package comp.cradle
 
-object Cradle {
+import java.io.InputStream
+import java.io.PrintStream
+
+class Cradle(val inStream : InputStream, val outStream : PrintStream) {
   val TAB = '\t'
   var look : Char = '\0'
-  var inStream = System.in
 
   def getChar() = {
     look = inStream.read.toChar
@@ -43,7 +45,7 @@ object Cradle {
     res
   }
   
-  def getNum() : Char = {
+  def getNum : Char = {
     if (!isDigit(look)) expected("Integer")
     val res = look;
     getChar
@@ -51,7 +53,7 @@ object Cradle {
   }
   
   def emit(s:String) = {
-    print(TAB + s)
+    outStream.print(TAB + s)
   }
   
   def emitLn(s:String) = {
@@ -61,6 +63,10 @@ object Cradle {
   
   def init = {
     getChar
+  }
+  
+  def expression = {
+    emitLn("Move #" + getNum + ",D0");
   }
   
 }
