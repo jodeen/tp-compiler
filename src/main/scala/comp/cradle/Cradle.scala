@@ -65,8 +65,32 @@ class Cradle(val inStream : InputStream, val outStream : PrintStream) {
     getChar
   }
   
-  def expression = {
-    emitLn("Move #" + getNum + ",D0");
+  def term = {
+    emitLn("MOVE #" + getNum + ",D0");
   }
   
+  def expression = {
+    term
+    while (List('+','-').contains(look)) {
+      emitLn("MOVE D0,D1")
+      look match {
+        case '+' => add
+        case '-' => subtract
+        case _ => expected("Addop")
+      }
+    }
+  }
+  
+  def add = {
+    matchChar('+')
+    term 
+    emitLn("ADD D1,D0")
+  }
+  
+  def subtract = {
+    matchChar('-')
+    term 
+    emitLn("SUB D1,D0")
+    emitLn("NEG D0")
+  }
 }
