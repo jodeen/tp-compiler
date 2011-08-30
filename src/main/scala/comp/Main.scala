@@ -9,7 +9,7 @@ object Main {
    * @param args the command line arguments
    */
   def main(args: Array[String]): Unit = {
-    val cradle = new Cradle(System.in, System.out)
+    val cradle = Cradle()
     cradle.init
     cradle.expression
   }

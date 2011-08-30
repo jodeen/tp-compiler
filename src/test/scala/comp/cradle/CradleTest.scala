@@ -11,7 +11,7 @@ class CradleTest {
   @Test
   def testExpression() = {
     val bos = new ByteArrayOutputStream
-    val cradle = new Cradle(buildInput("1+2"), new PrintStream(bos))
+    val cradle = Cradle(buildInput("1+2"), new PrintStream(bos))
     cradle.init
     cradle.expression
     assertEquals("\tMOVE #1,D0\n\t", new String(bos.toByteArray))
@@ -20,7 +20,7 @@ class CradleTest {
   @Test
   def testExpression_Invalid() = {
     val bos = new ByteArrayOutputStream
-    val cradle = new Cradle(buildInput("a"), new PrintStream(bos))
+    val cradle = Cradle(buildInput("a"), new PrintStream(bos),(a) => Unit)
     cradle.init
     cradle.expression
     assertEquals("\tInteger expected", new String(bos.toByteArray))
